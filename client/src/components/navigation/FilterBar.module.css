@@ -1,0 +1,25 @@
+@font-face {
+  font-family: "Redressed";
+  src: local("Redressed"),
+    url(../../static/fonts/Redressed.ttf) format("truetype");
+}
+
+.paper {
+  background-color: #ffc;
+  width: 200px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 5px 5px 7px rgba(33, 33, 33, 0.7);
+  position: relative;
+}
+
+.pin{
+  width: 55px;
+  height: auto;
+  position: absolute;
+  top: -10px;
+  left: 70px;
+}
+

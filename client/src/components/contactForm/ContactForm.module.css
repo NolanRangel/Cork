@@ -1,0 +1,67 @@
+@font-face {
+  font-family: "Redressed";
+  src: local("Redressed"),
+    url(../../static/fonts/Redressed.ttf) format("truetype");
+}
+
+.paper {
+  background-color: #ffc;
+  width: fit-content;
+  height: fit-content;
+  box-shadow: 5px 5px 7px rgba(33, 33, 33, 0.7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+/* advert title */
+.title {
+  font-family: Redressed, serif;
+  font-size: 48px;
+  color: black;
+  text-shadow: 0 0 2px white;
+  margin-top: 15px;
+}
+
+.container {
+  width: 600px;
+  height: auto;
+}
+
+.button{
+  border: 1px solid black;
+  border-radius: 5px;
+  transition: transform .1s linear, background-color .1s linear, box-shadow .1s linear, color .05s linear;
+}
+
+.button:hover{
+  background-color: lightgray;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+  transform: scale(1.1);
+}
+
+.pin{
+  width: 55px;
+  height: auto;
+  position: absolute;
+}
+
+.pinTL{
+  top: -5px;
+  left: -5px;
+}
+
+.pinTR{
+  top: -5px;
+  right: 10px;
+}
+
+.pinBL{
+  bottom: -5px;
+  left: -5px;
+}
+
+.pinBR{
+  bottom: -5px;
+  right: 10px;
+}

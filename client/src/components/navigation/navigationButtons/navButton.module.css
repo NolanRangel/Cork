@@ -1,0 +1,12 @@
+.button{
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 5px;
+    transition: transform .1s linear, background-color .1s linear, box-shadow .1s linear, color .05s linear;
+}
+
+.button:hover{
+    background-color: lightgray;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+    transform: scale(1.1);
+}

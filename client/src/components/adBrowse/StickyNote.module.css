@@ -1,0 +1,91 @@
+.stickyNote{
+    color: #000;
+    background-color: #ffc;
+    height: 180px;
+    width: 180px;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    transform: rotate(2deg);
+    box-shadow: 5px 5px 7px rgba(33, 33, 33, 0.7);
+    transition: transform .15s linear, box-shadow .15s linear;
+    position: relative;
+}
+
+.stickyNote:hover{
+    box-shadow: 10px 10px 7px rgba(0, 0, 0, 0.7);
+    transform: scale(1.25);
+    position: relative;
+    z-index: 5;
+    color: black;
+}
+
+.stickyNote:nth-of-type(even):hover{
+    box-shadow: 10px 10px 7px rgba(0, 0, 0, 0.7);
+    transform: scale(1.25);
+    position: relative;
+    z-index: 5;
+    color: black;
+}
+
+.stickyNote:nth-of-type(4n):hover{
+    box-shadow: 10px 10px 7px rgba(0, 0, 0, 0.7);
+    transform: scale(1.25);
+    position: relative;
+    z-index: 5;
+    color: black;
+}
+
+.stickyNote:nth-of-type(5n):hover{
+    box-shadow: 10px 10px 7px rgba(0, 0, 0, 0.7);
+    transform: scale(1.25);
+    position: relative;
+    z-index: 5;
+    color: black;
+}
+
+.stickyNote:nth-of-type(even) {
+    transform: rotate(-1deg);
+    position: relative;
+    top: 5px;
+}
+
+.stickyNote:nth-of-type(4n) {
+    transform: rotate(-3deg);
+    position: relative;
+    top: -5px;
+}
+
+.stickyNote:nth-of-type(5n) {
+    transform: rotate(3deg);
+    position: relative;
+    top: -10px;
+}
+
+.image{
+    width: auto;
+    height: 100px;
+    border-radius: 5px;;
+}
+
+.title{
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.pin{
+    width: 55px;
+    height: auto;
+    position: absolute;
+    top: -10px;
+    left: 55px;
+    transition: opacity .2s linear, transform .1s linear;
+}
+
+
+.stickyNote:hover > .pin{
+    opacity: 0;
+    transform: scale(1.3);
+}

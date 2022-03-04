@@ -1,0 +1,88 @@
+@font-face {
+    font-family: "Redressed";
+    src: local('Redressed'), url(../static/fonts/Redressed.ttf) format('truetype');
+}
+
+.wrapper{
+    background-image: url("../static/images/corkboard.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.paper{
+    background-color: #FFC;
+    width: 400px;
+    height: 250px;
+    box-shadow: 5px 5px 7px rgba(33, 33, 33, 0.7);
+    transform: rotate(-3deg);
+    position: relative;
+}
+
+.title{
+    font-family: Redressed, serif;
+    font-size: 120px;
+    color: black;
+    text-shadow: 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
+    text-align: center;
+}
+
+.subtitle{
+    font-family: Redressed, serif;
+    font-size: 48px;
+    color: black;
+    text-shadow: 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
+    text-align: center;
+}
+
+.button{
+    font-family: Redressed, serif;
+    text-decoration: none;
+    font-size: 26px;
+    color: black;
+    background-color: #FFC;
+    box-shadow: 5px 5px 7px rgba(33, 33, 33, 0.7);
+    width: 140px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: rotate(2deg);
+    transition: transform .15s linear;
+    position: relative;
+}
+
+.button:nth-of-type(even){
+    transform: rotate(-3deg);
+}
+
+.button:hover{
+    color: black;
+    transform: scale(1.2);
+}
+
+.button:hover > .postPin{
+    opacity: 0;
+    transform: scale(1.3);
+}
+
+.pinMain{
+    width: 55px;
+    height: auto;
+    position: absolute;
+    top: 0;
+    left: 173px;
+}
+
+.postPin{
+    width: 55px;
+    height: auto;
+    position: absolute;
+    top: -10px;
+    left: 40px;
+    transition: opacity .2s linear, transform .1s linear;
+}
