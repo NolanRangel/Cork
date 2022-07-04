@@ -13,9 +13,12 @@ import com.cork.server.models.ContactMessage;
 import com.cork.server.repositories.AdRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 @Service
 public class AdService {
@@ -25,6 +28,9 @@ public class AdService {
 
     @Autowired
     private JavaMailSender mailSender;
+
+    @Autowired
+    private TemplateEngine htmlTemplateEngine;
 
     public List<Ad> allAds(String category) {
         System.out.println(category);
@@ -60,50 +66,69 @@ public class AdService {
         String from = "cork.noreply@gmail.com";
         String to = email;
 
+        final Context ctx = new Context();
+        ctx.setVariable("title", title);
+        ctx.setVariable("image", image);
+        ctx.setVariable("price", price);
+        ctx.setVariable("city", city);
+        ctx.setVariable("state", state);
+        ctx.setVariable("description", description);
+        ctx.setVariable("email", email);
+        ctx.setVariable("adId", adId);
+
         try {
             MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
             String mailSubject = "Here's you're new Cork Ad listing";
-
-            String mailContent = "<!doctype html>\n" +
-                    "<html lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\"\n" +
-                    "<head>\n" +
-                    "    <meta charset=\"UTF-8\">\n" +
-                    "    <meta name=\"viewport\"\n" +
-                    "          content=\"width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0\">\n"
-                    +
-                    "    <meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\">\n" +
-                    "    <title>Email</title>\n" +
-                    "</head>\n" +
-                    "<body>\n" +
-                    "<h2 align='center' style=''>Would you like to change or delete your listing?</h2>" +
-                    "<h2 align='center' style=''><a href='http://localhost:3000/details/"
-                    + adId + "'>View Your Listing</a><p></p><a href='http://localhost:3000/edit_ad/"
-                    + adId + "'>Edit</a><p></p><a href='http://localhost:3000/delete/"
-                    + adId + "'>Delete</a></h2>"
-                    +
-                    "<h2 align='center' style=''>" + title + "</h2>" +
-                    "<h3 align='center' style=''>Price: " + price + "</h3>" +
-                    "<h3 align='center' style=''>Location: " + city + ", " + state + "</h3>" +
-                    "<h3 align='center' style=''>"
-                    + description + "</h3>" +
-                    "<p><img align='center' src='cid:adImage' style='' /></p>" +
-
-                    "</body>\n" +
-                    "</html>\n";
-
             helper.setFrom(from);
             helper.setTo(to);
             helper.setSubject(mailSubject);
-            helper.setText(mailContent, true);
+
+            final String htmlContent = htmlTemplateEngine.process("email-inlineimage.html", ctx);
+            helper.setText(htmlContent, true /* isHtml */);
 
             DataSource adImage = new FileDataSource(
-                    // C: is absolute patth, \\ is relative path
+                    // C: is absolute path, \\ is relative path
                     "C:/Users/Rangel/Desktop/cork/client/src/static/images/adImages/" + image);
             helper.addInline("adImage", adImage);
 
-            System.out.println(message);
+            // Add the inline image, referenced from the HTML code as
+            // "cid:${imageResourceName}"
+
+            // String mailContent = "<!doctype html>\n" +
+            // "<html lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\"\n" +
+            // "<head>\n" +
+            // " <meta charset=\"UTF-8\">\n" +
+            // " <meta name=\"viewport\"\n" +
+            // " content=\"width=device-width, user-scalable=no, initial-scale=1.0,
+            // maximum-scale=1.0, minimum-scale=1.0\">\n"
+            // +
+            // " <meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\">\n" +
+            // " <title>Email</title>\n" +
+            // "</head>\n" +
+            // "<body>\n" +
+            // "<h2 align='center' style=''>Would you like to change or delete your
+            // listing?</h2>" +
+            // "<h2 align='center' style=''><a href='http://localhost:3000/details/"
+            // + adId + "'>View Your Listing</a><p></p><a
+            // href='http://localhost:3000/edit_ad/"
+            // + adId + "'>Edit</a><p></p><a href='http://localhost:3000/delete/"
+            // + adId + "'>Delete</a></h2>"
+            // +
+            // "<h2 align='center' style=''>" + title + "</h2>" +
+            // "<h3 align='center' style=''>Price: " + price + "</h3>" +
+            // "<h3 align='center' style=''>Location: " + city + ", " + state + "</h3>" +
+            // "<h3 align='center' style=''>"
+            // + description + "</h3>" +
+            // "<p><img align='center' src='cid:adImage' style='' /></p>" +
+
+            // "</body>\n" +
+            // "</html>\n";
+
+            // helper.setText(mailContent, true);
+
+            // System.out.println(message);
             mailSender.send(message);
 
         } catch (MessagingException me) {
